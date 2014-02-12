@@ -9,7 +9,7 @@ util.inherits(Forkee, EE);
 function Forkee (options) {
   if (!(this instanceof Forkee)) return new Forkee(options);
 
-  process.on('uncaughtException', this.die.bind(this));
+  process.on('uncaughtException', this.dieWithError.bind(this));
   process.on('message', this.onMessage.bind(this));
 
 }
@@ -26,7 +26,11 @@ Forkee.prototype.respond = function (err, message) {
   process.send(message);
 };
 
-Forkee.prototype.die = function (err) {
+Forkee.prototype.die = function () {
+  process.exit(0);
+};
+
+Forkee.prototype.dieWithError = function (err) {
   process.send({ error: err});
   process.exit(1);
 };
