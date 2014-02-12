@@ -6,8 +6,12 @@ module.exports = Forkee;
 
 util.inherits(Forkee, EE);
 
-function Forkee (options) {
-  if (!(this instanceof Forkee)) return new Forkee(options);
+function Forkee (callback) {
+  if (!(this instanceof Forkee)) return new Forkee(callback);
+
+  this._callback = callback && typeof callback == 'function'
+    ? callback
+    : undefined;
 
   process.on('uncaughtException', this._dieWithError.bind(this));
   process.on('message', this._onMessage.bind(this));
@@ -19,7 +23,9 @@ Forkee.prototype.die = function () {
 };
 
 Forkee.prototype._onMessage = function (message) {
-  this.emit('request', message, this.respond.bind(this));
+  return !this._callback
+    ? this.emit('request', message, this.respond.bind(this))
+    : this._callback(message, this.respond.bind(this));
 };
 
 Forkee.prototype._respond = function (err, message) {

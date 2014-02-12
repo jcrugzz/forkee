@@ -20,6 +20,18 @@ var forked = new Forkee()
     callback(null, payload);
   });
 
+
+//
+// We can also just take a callback!
+//
+
+var proc = Forkee(function (message, callback) {
+  //
+  // Do something with message and acquire return payload
+  //
+  var payload = { woooo: 'yeaaaaa', party: 'time' };
+  callback(null, payload);
+})
 ```
 
 [fork]: https://github.com/jcrugzz/fork
