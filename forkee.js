@@ -29,6 +29,7 @@ Forkee.prototype._onMessage = function (message) {
 };
 
 Forkee.prototype._respond = function (err, message) {
+  message = message || {};
   if (err) {
     message.error = err;
   }
