@@ -9,16 +9,20 @@ util.inherits(Forkee, EE);
 function Forkee (options) {
   if (!(this instanceof Forkee)) return new Forkee(options);
 
-  process.on('uncaughtException', this.dieWithError.bind(this));
-  process.on('message', this.onMessage.bind(this));
+  process.on('uncaughtException', this._dieWithError.bind(this));
+  process.on('message', this._onMessage.bind(this));
 
 }
 
-Forkee.prototype.onMessage = function (message) {
+Forkee.prototype.die = function () {
+  process.exit(0);
+};
+
+Forkee.prototype._onMessage = function (message) {
   this.emit('request', message, this.respond.bind(this));
 };
 
-Forkee.prototype.respond = function (err, message) {
+Forkee.prototype._respond = function (err, message) {
   if (err) {
     message.error = err;
   }
@@ -26,11 +30,13 @@ Forkee.prototype.respond = function (err, message) {
   process.send(message);
 };
 
-Forkee.prototype.die = function () {
-  process.exit(0);
-};
-
-Forkee.prototype.dieWithError = function (err) {
+Forkee.prototype._dieWithError = function (err) {
+  //
+  // We attempt to send an error here but its ok if we don't as `fork`
+  // will understand that something bad happened
+  //
   process.send({ error: err});
   process.exit(1);
 };
+
+
