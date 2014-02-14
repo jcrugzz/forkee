@@ -24,8 +24,8 @@ Forkee.prototype.die = function () {
 
 Forkee.prototype._onMessage = function (message) {
   return !this._callback
-    ? this.emit('request', message, this.respond.bind(this))
-    : this._callback(message, this.respond.bind(this));
+    ? this.emit('request', message, this._respond.bind(this))
+    : this._callback(message, this._respond.bind(this));
 };
 
 Forkee.prototype._respond = function (err, msg) {
