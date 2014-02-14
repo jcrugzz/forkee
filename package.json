@@ -1,7 +1,7 @@
 {
   "name": "forkee",
   "description": "Wrapper around the child process to integrate with the request/response interaction of fork",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Jarrett Cruger <jcrugzz@gmail.com>",
   "repository": {
     "url": "git://github.com/jcrugzz/forkee.git"
