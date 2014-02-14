@@ -28,13 +28,19 @@ Forkee.prototype._onMessage = function (message) {
     : this._callback(message, this.respond.bind(this));
 };
 
-Forkee.prototype._respond = function (err, message) {
-  message = message || {};
+Forkee.prototype._respond = function (err, msg) {
+  msg = msg || {};
+  //
+  // Form a ghetto error object since we cannot serialize error objects
+  //
   if (err) {
-    message.error = err;
+    msg.error = {
+      message: err.message,
+      stack: err.stack
+    };
   }
 
-  process.send(message);
+  process.send(msg);
 };
 
 Forkee.prototype._dieWithError = function (err) {
@@ -42,7 +48,7 @@ Forkee.prototype._dieWithError = function (err) {
   // We attempt to send an error here but its ok if we don't as `fork`
   // will understand that something bad happened
   //
-  process.send({ error: err});
+  process.send({ error: { message: err.message, stack: err.stack }});
   process.exit(1);
 };
 
