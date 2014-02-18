@@ -3,7 +3,7 @@
 An extendable prototype for use in creating an agnostic request/response based
 child process. It is meant to be used with something like [`fork`][fork] in
 order to make it a more pleasurable experience writing node processes meant for
-this purpose.
+this purpose. Tests for this module are found in [`fork`][fork].
 
 ## example
 
