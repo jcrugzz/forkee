@@ -41,6 +41,7 @@ Forkee.prototype._respond = function (err, msg) {
   }
 
   process.send(msg);
+  process.disconnect();
 };
 
 Forkee.prototype._dieWithError = function (err) {
