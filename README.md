@@ -20,6 +20,11 @@ var forked = new Forkee()
     callback(null, payload);
   });
 
+//
+// If we want to log events from out child process.
+//
+
+forked.notify('website:finished', { id: '9872231' });
 
 //
 // We can also just take a callback!
