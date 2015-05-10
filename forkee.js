@@ -70,4 +70,4 @@ Forkee.prototype._dieWithError = function (err) {
   setTimeout(function () {
     process.exit(1);
   }, 100).unref();
-};*/
+};
