@@ -13,7 +13,9 @@
   "engines": {
     "node": "0.10.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "errs": "^0.3.2"
+  },
   "devDependencies": {
     "tape": "~2.3.2"
   },
