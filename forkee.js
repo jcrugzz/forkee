@@ -51,7 +51,10 @@ Forkee.prototype._respond = function (err, msg) {
   // Use Errs so that we create a serializable error object
   //
   if (err) {
-    msg.error = errs.merge(err, { child: true });
+    msg.error = errs.merge(err, {
+      child: true,
+      message: err.message
+    });
   }
 
   process.send(msg);
@@ -63,7 +66,13 @@ Forkee.prototype._dieWithError = function (err) {
   // We attempt to send an error here but its ok if we don't as `fork`
   // will understand that something bad happened
   //
-  process.send({ error: errs.merge(err, { uncaughtException: true, child: true }) });
+  process.send({
+    error: errs.merge(err, {
+      message: err.message,
+      uncaughtException: true,
+      child: true
+    })
+  });
   //
   // Try and ensure we end before we force exit on uncaughtExceptions
   //
